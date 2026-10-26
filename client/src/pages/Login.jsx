@@ -36,12 +36,7 @@ const Login = () => {
     }
   };
 
-  // Demo Login Helper
-  const fillDemo = (demoEmail, demoPassword) => {
-    setEmail(demoEmail);
-    setPassword(demoPassword);
-    setError('');
-  };
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="container py-5 my-md-4">
@@ -96,19 +91,27 @@ const Login = () => {
                     <i className="bi bi-lock"></i>
                   </span>
                   <input
-                    type="password"
-                    className="form-control border-start-0 ps-0"
+                    type={showPassword ? 'text' : 'password'}
+                    className="form-control border-start-0 border-end-0 ps-0"
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
+                  <button
+                    type="button"
+                    className="btn btn-outline-light border border-start-0 text-muted bg-white"
+                    onClick={() => setShowPassword(!showPassword)}
+                    title={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    <i className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'}`}></i>
+                  </button>
                 </div>
               </div>
 
               <button
                 type="submit"
-                className="btn btn-primary-modern w-100 py-2 mb-3 fw-semibold"
+                className="btn btn-primary-modern w-100 py-2 mb-3 fw-semibold shadow-sm"
                 disabled={loading}
               >
                 {loading ? (
@@ -121,36 +124,6 @@ const Login = () => {
                 )}
               </button>
             </form>
-
-            {/* 1-Click Demo Credentials */}
-            <div className="p-3 bg-light rounded-3 mt-2 border">
-              <span className="fw-bold small text-dark d-block mb-2 text-center">
-                ⚡ Quick Demo 1-Click Fill:
-              </span>
-              <div className="d-flex flex-wrap gap-2 justify-content-center">
-                <button
-                  type="button"
-                  className="demo-pill btn-sm"
-                  onClick={() => fillDemo('rajesh.kumar@example.com', 'password123')}
-                >
-                  <i className="bi bi-person-fill text-primary"></i> Customer
-                </button>
-                <button
-                  type="button"
-                  className="demo-pill btn-sm"
-                  onClick={() => fillDemo('apex.mechanic@carcare.com', 'password123')}
-                >
-                  <i className="bi bi-tools text-warning"></i> Provider
-                </button>
-                <button
-                  type="button"
-                  className="demo-pill btn-sm"
-                  onClick={() => fillDemo('admin@carcare.com', 'password123')}
-                >
-                  <i className="bi bi-shield-fill text-danger"></i> Admin
-                </button>
-              </div>
-            </div>
 
             <div className="text-center mt-4">
               <span className="text-muted small">Don't have an account? </span>
