@@ -103,7 +103,7 @@ CarCare/
 * **npm** (v9+)
 
 ### Installation
-From the root workspace directory `d:\CarCare`:
+From the root project directory:
 ```bash
 # 1. Install root dependencies
 npm install
@@ -124,29 +124,16 @@ npm run dev
 * **Backend REST API**: [http://localhost:5000](http://localhost:5000)
 * **API Health Check**: [http://localhost:5000/api/health](http://localhost:5000/api/health)
 
-> **💡 Zero-Config Database:**
-> If you have a local MongoDB daemon running, the backend connects to `mongodb://localhost:27017/carcare_connect`.
-> In development, if the local MongoDB server is unavailable, the server starts an embedded in-memory MongoDB instance and seeds demo data. Production requires the configured MongoDB connection.
-
 ---
 
-## 🔑 Demo Login Credentials
+## 🔐 User Authentication & Roles
 
-The database comes pre-seeded with realistic sample accounts across all roles:
+CarCare Connect supports role-based access control with secure JWT authentication:
+* **Customer**: Register and manage vehicles, discover nearby certified service bays, book appointments, and leave verified ratings.
+* **Service Provider**: Manage service menus, pricing, garage capacity, accept/reject booking requests, and track workshop milestones.
+* **Administrator**: Platform supervision, provider verification approval workflows, customer moderation, and transaction ledger.
 
-| Role | Name | Email | Password | Details |
-| :--- | :--- | :--- | :--- | :--- |
-| **🛡️ Admin** | CarCare Admin | `admin@carcare.com` | `password123` | Full access to verification, users & bookings |
-| **🚗 Customer** | Rajesh Kumar | `rajesh.kumar@example.com` | `password123` | Gachibowli customer with Honda City and Hyundai Creta |
-| **🚗 Customer** | Priya Sharma | `priya.sharma@example.com` | `password123` | Kondapur customer with Tata Nexon EV |
-| **🔧 Provider** | Manoj Verma | `apex.mechanic@carcare.com` | `password123` | Apex Auto Diagnostics (Ameerpet) |
-| **🔧 Provider** | Sunil Rao | `speedywheels@carcare.com` | `password123` | SpeedyWheels Self-Drive Hub (Gachibowli) |
-| **🔧 Provider** | Kunal Singhal | `crystalclear@carcare.com` | `password123` | CrystalClear Eco Car Spa (Jubilee Hills) |
-| **🔧 Provider** | Kavita Nair | `elitegarage@carcare.com` | `password123` | Elite Auto Lounge (Madhapur, pending approval demo) |
-
-Running `npm run seed` leaves an existing database intact. To replace it with demo data, run `node utils/seeder.js --reset` from the `server` directory.
-
-*(Quick 1-Click demo fill buttons are also available right on the `/login` screen!)*
+> New accounts can be registered securely via the `/register` portal for customers and service partners.
 
 ---
 
