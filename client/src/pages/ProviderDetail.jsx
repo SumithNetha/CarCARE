@@ -261,9 +261,8 @@ const ProviderDetail = () => {
           </div>
         </div>
 
-        {/* Right Column: Workshop Map Location & Quick Info */}
         <div className="col-lg-4">
-          <div className="card modern-card p-4 border-0 shadow-sm rounded-4 sticky-top" style={{ top: '90px' }}>
+          <div className="card modern-card p-4 border-0 shadow-sm rounded-4 sticky-sidebar">
             <h5 className="fw-bold mb-3">Workshop Location</h5>
             <div className="mb-3" style={{ height: '240px' }}>
               <ProviderMap

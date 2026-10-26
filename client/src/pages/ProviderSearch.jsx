@@ -130,9 +130,8 @@ const ProviderSearch = () => {
       </div>
 
       <div className="row g-4">
-        {/* ================= FILTER SIDEBAR ================= */}
         <div className="col-lg-3">
-          <div className="modern-card p-4 sticky-top" style={{ top: '90px' }}>
+          <div className="modern-card p-4 sticky-sidebar">
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h5 className="fw-bold mb-0">
                 <i className="bi bi-funnel text-primary me-2"></i> Filters

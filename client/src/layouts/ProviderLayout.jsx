@@ -49,7 +49,7 @@ const ProviderLayout = () => {
         <div className="row g-4">
           {/* Provider Sidebar */}
           <div className="col-lg-3 col-md-4">
-            <div className="modern-card p-3 sticky-top" style={{ top: '90px' }}>
+            <div className="modern-card p-3 dashboard-sidebar">
               <div className="d-flex align-items-center gap-3 pb-3 mb-3 border-bottom">
                 <div
                   className="bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center fw-bold fs-5"

@@ -71,14 +71,35 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
 }
 
-/* Glassmorphism Navbar */
+/* Glassmorphism Navbar - always on top of all page elements */
 .glass-nav {
-  background: rgba(255, 255, 255, 0.92);
+  position: sticky;
+  top: 0;
+  z-index: 1050 !important;
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(226, 232, 240, 0.8);
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
   transition: all 0.3s ease;
+}
+
+/* Sticky sidebars in dashboards & search */
+.dashboard-sidebar,
+.sticky-sidebar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 96px !important;
+  z-index: 30 !important;
+}
+
+@media (max-width: 991.98px) {
+  .dashboard-sidebar,
+  .sticky-sidebar {
+    position: static !important;
+    top: auto !important;
+    z-index: auto !important;
+  }
 }
 
 .brand-logo {
