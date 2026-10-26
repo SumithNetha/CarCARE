@@ -137,12 +137,12 @@ exports.register = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({ success: false, message: 'Please provide email and password' });
+    if (!email || !password || typeof email !== 'string' || typeof password !== 'string') {
+      return res.status(400).json({ success: false, message: 'Please provide a valid email and password' });
     }
 
-    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+    const cleanEmail = email.trim().toLowerCase();
+    const user = await User.findOne({ email: cleanEmail }).select('+password');
 
     if (!user) {
       return res.status(401).json({ success: false, message: 'Invalid email or password' });

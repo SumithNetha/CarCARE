@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const morgan = require('morgan');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -9,6 +11,11 @@ const errorHandler = require('./middleware/errorHandler');
 dotenv.config();
 
 const app = express();
+
+// Set security HTTP headers
+app.use(helmet({
+  crossOriginResourcePolicy: false,
+}));
 
 // Body parser
 app.use(express.json({ limit: '1mb' }));
@@ -62,7 +69,21 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Rate limiter for authentication routes (prevent brute force password guessing)
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30, // Limit each IP to 30 login/register attempts per 15 minutes
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: 'Too many authentication attempts from this IP, please try again after 15 minutes.',
+  },
+});
+
 // Mount API routes
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/register', authLimiter);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/vehicles', require('./routes/vehicles'));
 app.use('/api/providers', require('./routes/providers'));
@@ -83,14 +104,20 @@ const PORT = process.env.PORT || 5000;
 // Connect to Database & start server
 const startServer = async () => {
   try {
-    if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
-      throw new Error('JWT_SECRET must be configured in production');
+    if (process.env.NODE_ENV === 'production') {
+      if (!process.env.JWT_SECRET || process.env.JWT_SECRET.includes('supersecretcarcarejwtkey')) {
+        throw new Error('JWT_SECRET must be configured with a secure private key in production');
+      }
     }
     await connectDB();
     
-    // Auto-seed if running directly and not seeded
-    const seeder = require('./utils/seeder');
-    await seeder.seedIfNeeded();
+    // Auto-seed ONLY in development mode (never seed demo accounts in production)
+    if (process.env.NODE_ENV !== 'production') {
+      const seeder = require('./utils/seeder');
+      await seeder.seedIfNeeded();
+    } else {
+      console.log('[Security] Production mode active: auto-seeding is disabled.');
+    }
 
     const server = app.listen(PORT, () => {
       console.log(`====================================================`);
