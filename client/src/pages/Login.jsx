@@ -19,7 +19,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const user = await login(email, password);
+      const user = await login(email.trim().toLowerCase(), password);
       if (redirectUrl) {
         navigate(redirectUrl);
       } else if (user.role === 'admin') {
